@@ -6,7 +6,7 @@ import Zombie from './Zombie';
 import Daemon from './Daemon';
 
 // ? Создаём персонажей:
-const bowman = new Bowman('A', 'Bowman');
+const bowman = new Bowman('Anatoly', 'Bowman');
 const swordsman = new Swordsman('Vasily', 'Swordsman');
 const magician = new Magician('Ivan', 'Magician');
 const undead = new Undead('Dmitriy', 'Undead');
