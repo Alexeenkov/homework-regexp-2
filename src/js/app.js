@@ -13,12 +13,6 @@ const undead = new Undead('Dmitriy', 'Undead');
 const zombie = new Zombie('Aleksey', 'Zombie');
 const daemon = new Daemon('Ilya', 'Daemon');
 
-//
-
 // ? Чисто глянуть, что мы создали:
-console.log(bowman);
-console.log(swordsman);
-console.log(magician);
-console.log(undead);
-console.log(zombie);
-console.log(daemon);
+// eslint-disable-next-line no-console
+console.log(bowman, swordsman, magician, undead, zombie, daemon);
