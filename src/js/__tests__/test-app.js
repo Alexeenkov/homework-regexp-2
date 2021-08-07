@@ -4,11 +4,9 @@ import Magician from '../Magician';
 import Undead from '../Undead';
 import Zombie from '../Zombie';
 import Daemon from '../Daemon';
+import Character from '../Character';
 
 test('create the character "Bowman"', () => {
-  const name = 'Anatoly';
-  const type = 'Bowman';
-
   const expected = {
     attack: 25,
     defence: 25,
@@ -18,15 +16,12 @@ test('create the character "Bowman"', () => {
     type: 'Bowman',
   };
 
-  const received = new Bowerman(name, type);
+  const received = new Bowerman('Anatoly');
 
   expect(received).toEqual(expected);
 });
 
 test('create the character "Swordsman"', () => {
-  const name = 'Anatoly';
-  const type = 'Swordsman';
-
   const expected = {
     attack: 40,
     defence: 10,
@@ -36,15 +31,12 @@ test('create the character "Swordsman"', () => {
     type: 'Swordsman',
   };
 
-  const received = new Swordsman(name, type);
+  const received = new Swordsman('Anatoly');
 
   expect(received).toEqual(expected);
 });
 
 test('create the character "Magician"', () => {
-  const name = 'Anatoly';
-  const type = 'Magician';
-
   const expected = {
     attack: 10,
     defence: 40,
@@ -54,15 +46,12 @@ test('create the character "Magician"', () => {
     type: 'Magician',
   };
 
-  const received = new Magician(name, type);
+  const received = new Magician('Anatoly');
 
   expect(received).toEqual(expected);
 });
 
 test('create the character "Undead"', () => {
-  const name = 'Anatoly';
-  const type = 'Undead';
-
   const expected = {
     attack: 25,
     defence: 25,
@@ -72,15 +61,12 @@ test('create the character "Undead"', () => {
     type: 'Undead',
   };
 
-  const received = new Undead(name, type);
+  const received = new Undead('Anatoly');
 
   expect(received).toEqual(expected);
 });
 
 test('create the character "Zombie"', () => {
-  const name = 'Anatoly';
-  const type = 'Zombie';
-
   const expected = {
     attack: 40,
     defence: 10,
@@ -90,15 +76,12 @@ test('create the character "Zombie"', () => {
     type: 'Zombie',
   };
 
-  const received = new Zombie(name, type);
+  const received = new Zombie('Anatoly');
 
   expect(received).toEqual(expected);
 });
 
 test('create the character "Daemon"', () => {
-  const name = 'Anatoly';
-  const type = 'Daemon';
-
   const expected = {
     attack: 10,
     defence: 40,
@@ -108,31 +91,19 @@ test('create the character "Daemon"', () => {
     type: 'Daemon',
   };
 
-  const received = new Daemon(name, type);
+  const received = new Daemon('Anatoly');
 
   expect(received).toEqual(expected);
 });
 
 test('uncorrect name character', () => {
-  const name = 'A';
-  const type = 'Daemon';
-
-  function showThrowError() {
-    // eslint-disable-next-line no-new
-    new Daemon(name, type);
-  }
-
-  expect(showThrowError).toThrowError(new Error('Длина имени должна быть не менее 2-ух и не более 10-ти символов'));
+  expect(() => new Daemon('A')).toThrowError(
+    new Error('Длина имени должна быть не менее 2-ух и не более 10-ти символов'),
+  );
 });
 
 test('uncorrect type character', () => {
-  const name = 'Anatoly';
-  const type = 'Druid';
-
-  function showThrowError() {
-    // eslint-disable-next-line no-new
-    new Daemon(name, type);
-  }
-
-  expect(showThrowError).toThrowError(new Error('Некорректный тип персонажа'));
+  expect(() => new Character('Anatoly', 'Druid')).toThrowError(
+    new Error('Некорректный тип персонажа'),
+  );
 });

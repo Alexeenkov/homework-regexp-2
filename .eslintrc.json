@@ -17,5 +17,6 @@
       "error",
       "never"
     ]
-  }
+  },
+  "parser": "@babel/eslint-parser"
 }
