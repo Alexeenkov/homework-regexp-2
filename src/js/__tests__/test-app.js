@@ -1,109 +1,59 @@
-import Bowerman from '../Bowman';
-import Swordsman from '../Swordsman';
-import Magician from '../Magician';
-import Undead from '../Undead';
-import Zombie from '../Zombie';
-import Daemon from '../Daemon';
-import Character from '../Character';
+import orderByProps from '../app';
 
-test('create the character "Bowman"', () => {
-  const expected = {
-    attack: 25,
-    defence: 25,
-    health: 100,
-    level: 1,
-    name: 'Anatoly',
-    type: 'Bowman',
-  };
+test('sorting the array according to the passed rule', () => {
+  const expected = [
+    { key: 'name', value: 'мечник' },
+    { key: 'level', value: 2 },
+    { key: 'attack', value: 80 },
+    { key: 'defence', value: 40 },
+    { key: 'health', value: 10 },
+  ];
 
-  const received = new Bowerman('Anatoly');
-
-  expect(received).toEqual(expected);
-});
-
-test('create the character "Swordsman"', () => {
-  const expected = {
-    attack: 40,
-    defence: 10,
-    health: 100,
-    level: 1,
-    name: 'Anatoly',
-    type: 'Swordsman',
-  };
-
-  const received = new Swordsman('Anatoly');
-
-  expect(received).toEqual(expected);
-});
-
-test('create the character "Magician"', () => {
-  const expected = {
-    attack: 10,
+  const obj = {
+    name: 'мечник',
+    health: 10,
+    level: 2,
+    attack: 80,
     defence: 40,
-    health: 100,
-    level: 1,
-    name: 'Anatoly',
-    type: 'Magician',
   };
 
-  const received = new Magician('Anatoly');
+  const received = orderByProps(obj, ['name', 'level']);
 
   expect(received).toEqual(expected);
 });
 
-test('create the character "Undead"', () => {
-  const expected = {
-    attack: 25,
-    defence: 25,
-    health: 100,
-    level: 1,
-    name: 'Anatoly',
-    type: 'Undead',
-  };
+test('sorting an array without a passed rule', () => {
+  const expected = [
+    { key: 'attack', value: 80 },
+    { key: 'defence', value: 40 },
+    { key: 'health', value: 10 },
+    { key: 'level', value: 2 },
+    { key: 'name', value: 'мечник' },
+  ];
 
-  const received = new Undead('Anatoly');
-
-  expect(received).toEqual(expected);
-});
-
-test('create the character "Zombie"', () => {
-  const expected = {
-    attack: 40,
-    defence: 10,
-    health: 100,
-    level: 1,
-    name: 'Anatoly',
-    type: 'Zombie',
-  };
-
-  const received = new Zombie('Anatoly');
-
-  expect(received).toEqual(expected);
-});
-
-test('create the character "Daemon"', () => {
-  const expected = {
-    attack: 10,
+  const obj = {
+    name: 'мечник',
+    health: 10,
+    level: 2,
+    attack: 80,
     defence: 40,
-    health: 100,
-    level: 1,
-    name: 'Anatoly',
-    type: 'Daemon',
   };
 
-  const received = new Daemon('Anatoly');
+  const received = orderByProps(obj);
 
   expect(received).toEqual(expected);
 });
 
-test('uncorrect name character', () => {
-  expect(() => new Daemon('A')).toThrowError(
-    new Error('Длина имени должна быть не менее 2-ух и не более 10-ти символов'),
-  );
-});
+test('sorting an array by an incorrect rule', () => {
+  const obj = {
+    name: 'мечник',
+    health: 10,
+    level: 2,
+    attack: 80,
+    defence: 40,
+  };
 
-test('uncorrect type character', () => {
-  expect(() => new Character('Anatoly', 'Druid')).toThrowError(
-    new Error('Некорректный тип персонажа'),
+  expect(() => orderByProps(obj, ['prop'])).toThrowError(
+    new Error('Check the sorting parameters. One of the specified properties is missing in the object'),
   );
 });

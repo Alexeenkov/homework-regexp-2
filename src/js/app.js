@@ -1,18 +1,37 @@
-import Bowman from './Bowman';
-import Swordsman from './Swordsman';
-import Magician from './Magician';
-import Undead from './Undead';
-import Zombie from './Zombie';
-import Daemon from './Daemon';
+export default function orderByProps(object, rulesSort) {
+  const arr = [];
+  // Отсортированный массив из свойств объекта по алфавиту:
+  const sortKeysObject = Object.keys(object).sort();
 
-// ? Создаём персонажей:
-const bowman = new Bowman('Anatoly', 'Bowman');
-const swordsman = new Swordsman('Vasily', 'Swordsman');
-const magician = new Magician('Ivan', 'Magician');
-const undead = new Undead('Dmitriy', 'Undead');
-const zombie = new Zombie('Aleksey', 'Zombie');
-const daemon = new Daemon('Ilya', 'Daemon');
+  // Функция добавляет отсортированные объекты в массив согласно задания:
+  const pushObjectsToArr = () => {
+    for (const elem of sortKeysObject) {
+      arr.push({ key: elem, value: object[elem] });
+    }
+  };
 
-// ? Чисто глянуть, что мы создали:
-// eslint-disable-next-line no-console
-console.log(bowman, swordsman, magician, undead, zombie, daemon);
+  // ? Если правило сортировки не передано,
+  // то возвращаем массив объектов, отсортированных по алфавиту:
+  if (!rulesSort) {
+    pushObjectsToArr();
+    return arr;
+  }
+
+  // ? Если правило сортировки передано, но хотя бы одно из свойств отсутствует в объекте:
+  if (rulesSort.some((elem) => !Object.prototype.hasOwnProperty.call(object, elem))) {
+    throw new Error('Check the sorting parameters. One of the specified properties is missing in the object');
+  }
+
+  // ? Если правило сортировки передано корректно:
+  for (const key in object) {
+    if (rulesSort.includes(key)) {
+      // Добавляем объекты в массив согласно переданному правилу:
+      arr[rulesSort.indexOf(key)] = { key, value: object[key] };
+      // Удаляем из отсортированного массива уже добавленные свойства:
+      sortKeysObject.splice(sortKeysObject.indexOf(key), 1);
+    }
+  }
+  // Добавляем оставшиеся элементы отсортированного массива:
+  pushObjectsToArr();
+  return arr;
+}
