@@ -1,8 +1,17 @@
-import formatTelNumber from '../app';
+import ErrorRepository from '../app';
 
-test('the formats is correct', () => {
-  const expected = '+79270000000';
-  const receiver = formatTelNumber('8 (927) 000-00-00');
+test('Decoding the error', () => {
+  const expected = 'Switching Protocols — сервер выполняет требование клиента и переключает протоколы в соответствии с указанием, данным в поле заголовка Upgrade. Сервер отправляет заголовок ответа Upgrade, указывая протокол, на который он переключился';
 
-  expect(receiver).toBe(expected);
+  const errorRepository = new ErrorRepository();
+
+  expect(errorRepository.translate(101)).toEqual(expected);
+});
+
+test('Decoding the error (error not found)', () => {
+  const expected = 'Unknown error';
+
+  const errorRepository = new ErrorRepository();
+
+  expect(errorRepository.translate(105)).toEqual(expected);
 });

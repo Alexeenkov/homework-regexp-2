@@ -1,11 +1,18 @@
-export default function formatTelNumber(telNumber) {
-  const regExpMain = /(\s)|([()])|(-)/g;
-  const regExpEight = /^8/g;
+export default class ErrorRepository {
+  constructor() {
+    this.errors = new Map([
+      ['100', 'Continue — сервер удовлетворён начальными сведениями о запросе, клиент может продолжать пересылать заголовки'],
+      ['101', 'Switching Protocols — сервер выполняет требование клиента и переключает протоколы в соответствии с указанием, данным в поле заголовка Upgrade. Сервер отправляет заголовок ответа Upgrade, указывая протокол, на который он переключился'],
+      ['102', 'Processing — запрос принят, но на его обработку понадобится длительное время. Используется сервером, чтобы клиент не разорвал соединение из-за превышения времени ожидания. Клиент при получении такого ответа должен сбросить таймер и дожидаться следующей команды в обычном режиме'],
+      ['103', 'Early Hints — используется для раннего возврата части заголовков, когда заголовки полного ответа не могут быть быстро сформированы'],
+    ]);
+  }
 
-  let telNumberCorrect = telNumber;
-
-  telNumberCorrect = telNumberCorrect.replace(regExpMain, '');
-  telNumberCorrect = telNumberCorrect.replace(regExpEight, '+7');
-
-  return telNumberCorrect;
+  translate(code) {
+    const error = this.errors.get(String(code));
+    if (error) {
+      return error;
+    }
+    return 'Unknown error';
+  }
 }
